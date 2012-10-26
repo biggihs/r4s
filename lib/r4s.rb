@@ -1,6 +1,6 @@
 require "r4s/version"
 
-module R4s
+module R4S
   class SSE
     def initialize io
       @io = io
