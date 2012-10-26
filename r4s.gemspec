@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = R4s::VERSION
   gem.authors       = ["Birgir Hrafn Sigurðsson"]
   gem.email         = ["biggihs@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Wrapper for Rails 4 streaming}
+  gem.summary       = %q{Wrapper for Rails 4 streaming}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
