@@ -17,6 +17,7 @@ Most of my code is based on Tenderloves "Is it live?" article. http://tenderlove
 ## NOTE
 This gem works only in Rails 4 (I thinks)
 
+(I think I have found out what's wrong with turbolinks and r4s. Fix should come soon)
 You can not use turbolinks with this project for some strange, inapparent reason. 
 If you make a connection and then close the browser the srv will crash stating that the headers had already been sent.
 who, why, where or how these headers are sent are a mistery to me. My solution was to remove the turbolinks. 
