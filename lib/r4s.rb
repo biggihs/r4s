@@ -1,6 +1,3 @@
-require "r4s/version"
-require 'json'
-
 class R4S
   SSES = {}
 
