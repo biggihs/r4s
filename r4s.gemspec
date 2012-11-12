@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.version       = R4s::VERSION
   gem.authors       = ["Birgir Hrafn Sigurðsson"]
   gem.email         = ["biggihs@gmail.com"]
-  gem.description   = %q{Wrapper for Rails 4 streaming}
+  gem.description   = %q{R4S is a gem that simplifies sending server side events (SSE) to multiple browsers in Rails 4. It is supposed to simulate broadcasting to all the browsers that are connected to it.}
   gem.summary       = %q{Wrapper for Rails 4 streaming}
   gem.homepage      = ""
 
