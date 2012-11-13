@@ -1,10 +1,12 @@
+require 'thread_safe'
+require 'json'
 class R4S
-  SSES = {}
+  SSES = ThreadSafe::Hash.new
 
   def self.add_stream(response,key="none")
 
     if !R4S::SSES.keys.include?(key)
-      R4S::SSES[key] = {}
+      R4S::SSES[key] = ThreadSafe::Hash.new
       key_count = 0
     else
       key_count = R4S::SSES[key].keys.count
