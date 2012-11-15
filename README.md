@@ -23,6 +23,9 @@ If you make a connection and then close the browser the srv will crash stating t
 who, why, where or how these headers are sent are a mistery to me. My solution was to remove the turbolinks. 
 This might be fixed in the future.
 
+You need to enable threads in your config and your server needs to
+support threads.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -45,7 +48,7 @@ R4S uses only two functions
 
 One to create the stream(s)
 
-    R4S.add_stream(response,"key").start
+    R4S.add_stream(response,session,"key").start
 
 One to push to the stream(s)
 
@@ -57,7 +60,7 @@ I created a "stream" controller to handle my streams
     class StreamController < ApplicationController
         include ActionController::Live
         def stream1
-            R4S.add_stream(response,"stream.key").start
+            R4S.add_stream(response,session,"stream.key").start
         end
     end
 
@@ -80,7 +83,7 @@ Create a action that triggers the event.
 
     class HomeController < ApplicationController
       def index
-        R4S.push_data('kanban',{:time=>Time.now},:event=>"refresh")
+        R4S.push_data('stream.key',{:time=>Time.now},:event=>"refresh")
         render :json => {:success=>true}
       end
     

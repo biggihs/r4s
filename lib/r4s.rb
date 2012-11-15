@@ -1,22 +1,25 @@
 require 'thread_safe'
 require 'json'
-class R4S
+module R4S
   SSES = ThreadSafe::Hash.new
 
-  def self.add_stream(response,key="none")
+  #The session_id is used to identify users who already have a connection
+  #The key is used to group "identical" sse-streams so you can push data to a group of streams
+  def self.add_stream(response,session,key="none")
 
-    if !R4S::SSES.keys.include?(key)
-      R4S::SSES[key] = ThreadSafe::Hash.new
-      key_count = 0
-    else
-      key_count = R4S::SSES[key].keys.count
+    id = session["session_id"]
+
+    R4S::SSES[key] = ThreadSafe::Hash.new unless R4S::SSES.keys.include?(key)
+
+    if R4S::SSES[key].keys.include?(id)
+      sse = R4S::SSES[key][id]
+      sse.close
     end
 
-    sse = R4S::SSE.new(response,key,key_count)
-    R4S::SSES[key][key_count] = sse
+    sse = R4S::SSE.new(response,key,id)
+    R4S::SSES[key][id] = sse
 
     return sse
-
   end
 
   def self.push_data(key,data,options={})
@@ -51,8 +54,10 @@ class R4S
         end
       rescue
       ensure
-        R4S::SSES[@key][@id].close 
-        R4S::SSES[@key].delete(@id)
+        #it might have been reopened
+        unless !R4S::SSES[@key][@id].closed?
+          R4S::SSES[@key].delete(@id)
+        end
       end
     end
 
@@ -64,4 +69,5 @@ class R4S
       @io.close
     end
   end
+
 end
